@@ -1,0 +1,4 @@
+node_modules/**/*
+bower_components/**/*
+awc-web/bower_components/**/*
+testingserver/node_modules/**/*

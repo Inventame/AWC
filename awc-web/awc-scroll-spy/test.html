@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+	<link rel="import" href="../materialDesign/materialDesign.html">
+	<link rel="import" href="awc-scroll-spy.html">
+	<style>
+		body > div{
+			padding: 20px;
+			font-family: 'Open Sans', sans-serif;
+			color: #4D4D4D;
+		}
+		h3{
+			font-size: 1.4em;
+			padding: 0px;
+			margin: 0px;
+			font-weight: 100;
+		}
+		.spy-display{
+			position: fixed;
+			left: 0px;
+			right: 0px;
+			top: 0px;
+			background-color: #CFD8DC;
+			padding: 5px;
+			font-size: 1.3em;
+		}
+		.items{
+			height: 500px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h1>AWC</h1>
+		<h2>Responsive Tag - test</h2>
+		<p>Just scroll down!</p>
+		<hr>
+		<div class="spy-display">Display container: <span id='itemActive'></span></div>
+		<awc-scroll-spy spy='.items' id='spy'></awc-scroll-spy>
+		<div class="items" id='one'>
+			Container One
+			<hr>
+		</div>
+		<div class="items" id='two'>
+			Container Two
+			<hr>
+		</div>
+		<div class="items" id='three'>
+			Container Three
+			<hr>
+		</div>
+		<div class="items" id='four'>
+			Container Four
+			<hr>
+		</div>
+		<div class="items" id='five'>
+			Container Five
+			<hr>
+		</div>
+	</div>
+	<script>
+		var spy = document.getElementById('spy');
+		spy.addEventListener('itemActiveChanged', function( _event ){
+			document.getElementById('itemActive').innerHTML = _event.detail.item.id;
+		});
+	</script>
+</body>
+</html>

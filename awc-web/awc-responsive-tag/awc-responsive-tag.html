@@ -1,0 +1,125 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<dom-module id="awc-responsive-tag">
+
+	<template>
+		<div hidden$="{{!isMobile}}">
+			<content select=".mobile"></content>
+		</div>
+		<div hidden$="{{!isTablet}}">
+			<content select=".tablet"></content>
+		</div>
+		<div hidden$="{{!isResponsive}}">
+			<content select=".responsive"></content>
+		</div>
+		<div hidden$="{{!isDesktop}}">
+			<content select=".desktop"></content>
+		</div>
+		<div hidden$="{{!isDefault}}">
+			<content select=".default"></content>
+		</div>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'awc-responsive-tag',
+			properties:{
+				isMobile:{
+					type: Boolean,
+					value: false
+				},
+				isTablet:{
+					type: Boolean,
+					value: false
+				},
+				isResponsive:{
+					type: Boolean,
+					value: false
+				},
+				isDesktop:{
+					type: Boolean,
+					value: true
+				},
+				isDefault:{
+					type: Boolean,
+					value: true
+				}
+			},
+			ready: function(){
+				var self = this;
+				var mobile = window.matchMedia("(max-width:480px)");
+				var mobileHandler = function( _event ){
+					self._handle.becomeMobile.apply( self, [_event.matches]);
+				};
+				mobile.addListener(mobileHandler);
+
+				var tablet = window.matchMedia("(min-width:481px) and (max-width:600px)");
+				var tabletHandler = function( _event ){
+					self._handle.becomeTablet.apply( self, [_event.matches]);
+				};
+				tablet.addListener(tabletHandler);
+
+				var responsive = window.matchMedia("(max-width:600px)");
+				var responsiveHandler = function( _event ){
+					self._handle.becomeResponsive.apply( self, [_event.matches]);
+				};
+				responsive.addListener(responsiveHandler);
+
+				var desktop = window.matchMedia("(min-width:601px)");
+				var desktopHandler = function( _event ){
+					self._handle.becomeDesktop.apply( self, [_event.matches]);
+				};
+				desktop.addListener(desktopHandler);
+
+				var _default = window.matchMedia("(min-width:481px)");
+				var defaultHandler = function( _event ){
+					self._handle.becomeDefault.apply( self, [_event.matches]);
+				};
+				_default.addListener(defaultHandler);
+
+				this.isMobile = mobile.matches;
+				this.isTablet = tablet.matches;
+				this.isResponsive = responsive.matches;
+				this.isDesktop = desktop.matches;
+				this.isDefault = _default.matches;
+			},
+			_handle:{
+				becomeMobile: function( _match ){
+					this.isMobile = _match;
+					if( _match )
+						this.fire('onBecomeMobile');
+					else
+						this.fire('onLeaveMobile');
+				},
+				becomeTablet: function( _match ){
+					this.isTablet = _match;
+					if( _match )
+						this.fire('onBecomeTablet');
+					else
+						this.fire('onLeaveTablet');
+				},
+				becomeResponsive: function( _match ){
+					this.isResponsive = _match;
+					if( _match )
+						this.fire('onBecomeResponsive');
+					else
+						this.fire('onLeaveResponsive');
+				},
+				becomeDesktop: function( _match ){
+					this.isDesktop = _match;
+					if( _match )
+						this.fire('onBecomeDesktop');
+					else
+						this.fire('onLeaveDesktop');
+				},
+				becomeDefault: function( _match ){
+					this.isDefault = _match;
+					if( _match )
+						this.fire('onBecomeDefault');
+					else
+						this.fire('onLeaveDefault');
+				}
+			}
+		});
+	</script>
+
+</dom-module>

@@ -1,0 +1,65 @@
+<style is='custom-style'>
+body, .relative{
+	width: 100%;
+	height: 100%;
+}
+.relative {
+	@apply(--layout-relative);
+}
+.fit {
+	@apply(--layout-fit);
+}
+.flex {
+    @apply(--layout-horizontal);
+}
+.flex-horizontal {
+    @apply(--layout-horizontal);
+}
+.flex-vertical {
+    @apply(--layout-vertical);
+}
+.flex-vertical-center{
+	@apply(--layout-center-justified);
+    @apply(--layout-vertical);
+	@apply(--layout-center);
+}
+.flex-center-align {
+    @apply(--layout-horizontal);
+    @apply(--layout-center);
+ }
+ .flex-start-align {
+    @apply(--layout-horizontal);
+    @apply(--layout-start);
+}
+.flex-end-align {
+    @apply(--layout-horizontal);
+    @apply(--layout-end);
+}
+.flex-start-justified {
+    @apply(--layout-horizontal);
+    @apply(--layout-start-justified);
+}
+.flex-center-justified {
+	@apply(--layout-horizontal);
+	@apply(--layout-center-justified);
+}
+.flex-end-justified {
+    @apply(--layout-horizontal);
+    @apply(--layout-end-justified);
+}
+.flex-equal-justified {
+    @apply(--layout-horizontal);
+    @apply(--layout-justified);
+}
+.flex-equal-around-justified {
+    @apply(--layout-horizontal);
+    @apply(--layout-around-justified);
+}
+.flex-wrap {
+	@apply(--layout-horizontal);
+	@apply(--layout-wrap);
+}
+.flex-reversed {
+    @apply(--layout-horizontal-reverse);
+}
+</style>

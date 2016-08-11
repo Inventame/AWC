@@ -1,0 +1,162 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../awc-simple-hero-image/awc-simple-hero-image.html">
+<link rel="import" href="../materialDesign/materialDesign.html">
+
+<dom-module id="awc-overlay-menu">
+
+	<template>
+		<style is='custom-style'>
+			:host{
+				--awc-om-color: #424242;
+				--awc-om-background-color: #CFD8DC;
+				--awc-om-hover-color: #829494;
+				--awc-om-hover-background-color: #B0B5BA;
+			};
+			#overlay{
+				display: none;
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				right: 0px;
+				bottom: 0px;
+				z-index: 999999999;
+			}
+			.mdl-layout__drawer{
+				background-color: var(--awc-om-background-color);
+				border-color: var(--awc-om-background-color);
+				color: var(--awc-om-color);
+			}
+			.mdl-layout__drawer a.mdl-navigation__link{
+				color: var(--awc-om-color);
+			}
+			.mdl-layout__drawer a.mdl-navigation__link:hover{
+				background-color: var(--awc-om-hover-background-color);
+				color: var(--awc-om-hover-color);
+			}
+		</style>
+		<div id='overlay'>
+			<div class="mdl-layout mdl-js-layout" on-tap='hide'>
+				<div class="mdl-layout__drawer">
+					<template is='dom-if' if='{{!hero}}'>
+						<span class="mdl-layout-title" style='display:table;'>
+							<template is='dom-if' if='{{logo}}'>
+								<iron-image  src="{{logo}}" style="width:40px; height:40px; display:table-cell" sizing='contain'></iron-image>
+							</template>
+							<div style='display:table-cell; padding-left: 6px;'>{{title}}</div>
+						</span>
+					</template>
+					<template is='dom-if' if='{{hero}}'>
+						<div style='width:100%; height:{{heroHeight}}; padding:0px;' class='mdl-layout-title'>
+							<awc-simple-hero-image url="{{logo}}" height='{{heroHeight}}'>
+								<div class="content">
+								</div>
+							</awc-simple-hero-image>
+						</div>
+					</template>
+					<nav class="mdl-navigation" items-changed='{{refresh}}'>
+						<template is='dom-repeat' items="{{items}}">
+							<a class="mdl-navigation__link" href="{{item.url}}" on-click='_click' id='{{item.id}}'>
+								<i class="material-icons mdl-list__item-icon">{{item.icon}}</i>
+								{{item.title}}
+							</a>
+						</template>
+					</nav>
+				</div>
+			</div>
+		</div>
+		<div style='display:none;' id='content'>
+			<content></content>
+		</div>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'awc-overlay-menu',
+			properties:{
+				title: {
+					type: String,
+					value: 'Menu'
+				},
+				logo: String,
+				items: {
+					type: Array,
+					value: [],
+					notify: true,
+
+				},
+				hero: {
+					type: Boolean,
+					value: false
+				},
+				heroHeight:{
+					type: String,
+					value: '100px'
+				}
+			},
+			_items: [],
+			show: function(){
+				this.$.overlay.style.display = 'block';
+				var button = this.$.overlay.querySelector('.mdl-layout__drawer-button');
+				button.style.display = 'none';
+				var self = this;
+				setTimeout( function(){
+					var menu = self.$.overlay.querySelector('.mdl-layout');
+					menu.MaterialLayout.toggleDrawer();
+				}, 100 );
+				this.fire('onShow');
+			},
+			hide: function( _event ){
+				var target = _event.target;
+				if( target.classList.contains('mdl-layout__drawer') || target.classList.contains('mdl-layout-title') || target.classList.contains('mdl-navigation') )
+					return;
+				if( !target.classList.contains('mdl-layout__obfuscator') ){
+					var menu = this.$.overlay.querySelector('.mdl-layout');
+					menu.MaterialLayout.toggleDrawer();
+				}
+				var self = this;
+				setTimeout( function(){
+					self.$.overlay.style.display = 'none';
+				}, 150 );
+				this.fire('onHide');
+			},
+			append: function( _item ){
+				this.$.content.appendChild( _item );
+			},
+			remove: function( _item ){
+				this.$.content.removeChild( this.$.content.querySelector( _item ) );
+			},
+			clean: function(){
+				Polymer.dom.flush();
+			},
+			_refresh: function(){
+				this._items = [];
+				var list = this.$.content.querySelectorAll('a');
+				for (var i = 0; i < list.length; i++) {
+					var current = list[i];
+					var item = {};
+					item.title = current.textContent || 'untitled';
+					item.icon = current.getAttribute('icon');
+					item.url = current.getAttribute('href') || '#';
+					item.id = current.getAttribute('id') || '';
+					this._items.push( item );
+				};
+				componentHandler.upgradeDom();
+				this.items = this._items;
+			},
+			_click: function( _event ){
+				this.fire( 'click', _event.target );
+			},
+			ready: function(){
+				var self = this;
+			    var observerCallback = function(){
+			    	self._refresh.apply( self );
+			    };
+			    var mutationObserver = new MutationObserver(observerCallback);
+			    mutationObserver.observe( this.$.content, {childList: true, subtree: true} );
+			    this._refresh();
+			}
+		});
+	</script>
+
+</dom-module>

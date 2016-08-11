@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="stylesheet" href="../bower_components/material-design-lite/material.min.css">
+	<script type="text/javascript" src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+	<script type="text/javascript" src="../bower_components/material-design-lite/material.min.js"></script>
+	<link rel="import" href="awc-top-menu.html">
+	<style>
+		body > div{
+			padding: 20px;
+			font-family: 'Open Sans', sans-serif;
+			color: #4D4D4D;
+		}
+		h3{
+			font-size: 1.4em;
+			padding: 0px;
+			margin: 0px;
+			font-weight: 100;
+		}
+	</style>
+	<style is="custom-style">
+		awc-top-menu{
+			--awc-tm-bar:red;
+			--awc-tm-logo-width-scroll:50px;
+			--awc-tm-logo-height-scroll:50px;
+		}
+		.items{
+			height: 500px;
+		}
+	</style>
+</head>
+<body style="margin:0;">
+	<div>
+		<br><br>
+		<h1>AWC</h1>
+		<h2>Top Menu - test</h2>
+		Just scroll down and resize your browser
+		<hr>
+
+		<div class="items" id='one'>one</div>
+		<div class="items" id='two'>Two</div>
+		<div class="items" id='three'>Three</div>
+		<div class="items" id='four'>Four</div>
+		<div class="items" id='five'>Five</div>
+	</div>
+	<awc-top-menu logo="https://elements.polymer-project.org/images/polymer.svg" responsive-hero=true logo-responsive-menu='https://elements.polymer-project.org/images/polymer.svg' collapse spy='.items'>
+		<span class="title">Company Name</span>
+		<a href="#home" target='one'>Home</a>
+		<a href="#about" target='two'>About</a>
+		<a href="#products" target='three'>Products</a>
+		<a href="#services" target='four'>Services</a>
+		<a href="#contac" target='five'>Contact</a>
+	</awc-top-menu>
+		
+</body>
+</html>

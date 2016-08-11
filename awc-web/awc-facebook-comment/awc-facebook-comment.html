@@ -1,0 +1,96 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../materialDesign/materialDesign.html">
+
+<dom-module id="awc-facebook-comment">
+	<template>
+		<style is="custom-style">
+		:host{
+			--awc-fc-header-color:black;
+			--awc-fc-header-size:28px;
+			--awc-fc-border:2px solid #f2f2f2;
+		}
+			.container{
+				width: 100%;
+				height: 100%;
+				background: var(--awc-fc-background);
+				border:var(--awc-fc-border);
+				
+			}
+			.header{
+				margin-top: 20px;
+				margin-bottom: 20px;
+				font-size: var(--awc-fc-header-size);
+				color:var(--awc-fc-header-color);
+			}
+		</style>
+			<div id="container" class="container">
+				<div class="header" id="header">{{header}}</div>
+				<div id="fb-root"></div>
+				<div class="fb-comments" data-href="{{url}}" data-width="{{width}}" data-numposts="{{numposts}}" id="comments"></div>
+			</div>	
+	</template>
+	
+	<script>
+		Polymer({
+			is: 'awc-facebook-comment',
+			properties: {
+				header: {
+					type: String
+				},
+				colorscheme: {
+					type: String,
+					value:"light"
+				},
+				url: {
+	                type: String
+            	},
+            	numposts: {
+					type: String,
+					value:"10"
+				},
+				orderby: {
+					type: String,
+					value:"social"
+				},
+				width: {
+					type: String,
+					value:"100%"
+				},
+				background: {
+					type: String
+				},
+				language: {
+					type: String,
+					value:"en_US"
+				}
+
+			},
+			ready:function(){
+				var self = this;
+
+				self.customStyle['--awc-fc-fadeSpeed'] = self.fadeSpeed;
+				self.customStyle['--awc-fc-background'] = self.background;
+				self.updateStyles();
+
+				console.log("inicio");
+				window.onload = function(){ 
+					document.getElementById("comments").setAttribute('data-href', self.url);
+					document.getElementById("comments").setAttribute('data-width', self.width);
+					document.getElementById("comments").setAttribute('data-numposts', self.numposts); 
+					document.getElementById("comments").setAttribute('data-colorscheme', self.colorscheme);  
+					document.getElementById("comments").setAttribute('data-order-by', self.orderby);
+					
+					var js, fjs = document.getElementsByTagName("script")[0];
+					if (document.getElementById("facebook-jssdk")) return;
+					js = document.createElement("script"); 
+					js.id = "facebook-jssdk";
+					js.src = "//connect.facebook.net/"+self.language+"/sdk.js#xfbml=1&version=v2.7";
+					fjs.parentNode.insertBefore(js, fjs);
+
+					
+				}
+				
+			}
+		});
+</script>
+</dom-module>

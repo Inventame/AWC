@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>AWC - Back to Top Buttom</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="../materialDesign/materialDesign.html">
+	<link rel="import" href="awc-back-to-top.html">
+	<style>
+		body > div{
+			padding: 20px;
+		}
+		*{
+			font-family: 'Open Sans', sans-serif;
+			color: #4D4D4D;
+		}
+		h3{
+			font-size: 1.4em;
+			padding: 0px;
+			margin: 0px;
+			font-weight: 100;
+		}
+	</style>
+	<style is="custom-style">
+		.yellow{
+			--awc-btt-backgroundColor: #EDBA0F;
+			--awc-btt-bottom: 20px;
+		}
+		.green{
+			--awc-btt-backgroundColor: #1FB08A;
+			--awc-btt-iconColor: #242629;
+		}
+	</style>	
+</head>
+<body style='height:3000px;'>
+	<div>
+		<h1>AWC</h1>
+		<h2>Back to top button - test</h2>
+		Just scroll down
+		<awc-back-to-top id="default"></awc-back-to-top>
+		<awc-back-to-top id="center" class='yellow' ripple-effect='false' align='center'></awc-back-to-top>
+		<awc-back-to-top id="left" class='green' align='left'></awc-back-to-top>
+</body >
+</html>
+
+
+
+

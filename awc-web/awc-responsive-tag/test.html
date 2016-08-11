@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+	<script type="text/javascript" src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+	<link rel="import" href="../materialDesign/materialDesign.html">
+	<link rel="import" href="awc-responsive-tag.html">
+	<style>
+		body > div{
+			padding: 20px;
+			font-family: 'Open Sans', sans-serif;
+			color: #4D4D4D;
+		}
+		h3{
+			font-size: 1.4em;
+			padding: 0px;
+			margin: 0px;
+			font-weight: 100;
+		}
+		.content{
+			width: 300px;
+			height: 300px;
+			text-align: center;
+			margin: 5px;
+		}
+		.desktop{
+			background-color: green;
+			color: white;
+		}
+		.default{
+			background-color: blue;
+			color: white;
+		}
+		.mobile{
+			background-color: red;
+			color: white;
+		}
+		.tablet{
+			background-color: yellow;
+			color: white;
+		}
+		.responsive{
+			background-color: black;
+			color: white;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h1>AWC</h1>
+		<h2>Responsive Tag - test</h2>
+		<p>Just resize your windows or open from differents devices</p>
+		<hr>
+
+		<awc-responsive-tag id="master">
+			<div class="desktop content">Desktop content</div>
+			<div class="default content">Default content</div>
+			<div class="responsive content">Responsive content</div>
+			<div class="tablet content">Tablet content</div>
+			<div class="mobile content">Mobile content</div>
+		</awc-responsive-tag>
+	</div>
+	<script>
+		var master = document.getElementById('master');
+		master.addEventListener('onBecomeResponsive', function(){
+			console.log('Convirtiendome en responsive');
+		});
+		master.addEventListener('onLeaveResponsive', function(){
+			console.log('Dejando el responsive');
+		});
+	</script>
+</body>
+</html>

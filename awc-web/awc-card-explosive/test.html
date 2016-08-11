@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>AWC - Card Explosive</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="import" href="../materialDesign/materialDesign.html">
+	<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="awc-card-explosive.html">
+	<style>
+		body > div{
+			padding: 20px;
+		}
+		*{
+			font-family: 'Open Sans', sans-serif;
+			color: #4D4D4D;
+		}
+		h3{
+			font-size: 1.4em;
+			padding: 0px;
+			margin: 0px;
+			font-weight: 100;
+		}
+		.card{
+			margin: 10px;
+			width: 200px;
+			height: 200px;
+			border: 1px solid #6B787A;
+			background-color: #829494;
+		}
+		.card2{
+			margin: 10px;
+			width: 200px;
+			height: 200px;
+			border: 1px solid #B02621;
+			background-color: #DE332E;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h1>AWC</h1>
+		<h2>Card Explosive - test</h2>
+		Click the card
+		<hr>
+		<awc-card-explosive>
+			<div class="default card">
+				This is a simple card
+			</div>
+			<div class="expanded">
+				<button class='awc-ce-close'></button>
+				this is the expanded content
+			</div>
+		</awc-card-explosive>
+		<awc-card-explosive>
+			<div class="default card2">
+				This is a second card
+			</div>
+			<div class="expanded">
+				<button class='awc-ce-close'></button>
+				this is the expanded content of the secodn card
+			</div>
+		</awc-card-explosive>
+	</div>
+
+	
+
+</body>
+</html>
+
+
+
+

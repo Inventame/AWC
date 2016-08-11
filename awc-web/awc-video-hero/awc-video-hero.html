@@ -1,0 +1,268 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<!-- VideoJs Dependencies-->
+<link href="http://vjs.zencdn.net/5.10.4/video-js.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/5.10.4/video.js"></script>
+<script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+<!-- Youtube Dependencies-->
+<script src="https://www.youtube.com/player_api"></script>
+
+<dom-module id="awc-video-hero">
+<template>
+<style is="custom-style" >
+	host{
+
+	}
+	.content{
+		position: relative;
+		z-index: 2;
+	}
+	.container {
+		width: 100%;
+		height: var(--awc-vh-height);
+		overflow: hidden;
+		position: relative;
+		background: var(--awc-vh-image-url);
+		background-size: cover !important;
+		background-position: center center;
+		background-color:var(--awc-vh-background-color) !important;
+	}
+	.fit {
+		@apply(--layout-fit);
+	}
+	.video {
+		position: absolute;
+	    left: 50%;
+		transform: translate3D(-50%, 0, 0);
+	    margin: auto;
+		z-index: 1;
+		width: auto;
+		height: auto;
+		min-width: 100%;
+    	min-height: 100%;
+	}
+	.youtube {
+		width: 100%;
+		height: 100%;
+	}
+	.videojs {
+		left: 50%;
+		transform: translate3D(-50%, 0, 0);
+	    margin: auto;
+		min-width: 100%;
+    	min-height: 100%;
+	}
+	#videocontainer {
+	    position: absolute;
+	    padding-bottom: 56.25%;
+	    height: 0; 
+	    overflow: hidden;
+		min-height: 100%;
+		min-width: 100%; 
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto; 
+		
+	}
+
+	#videocontainer iframe {
+	    position: absolute;
+	    width: 100%;
+	    height: 100%;
+	    left: 50%;
+    	transform: translate3D(-50%,0, 0);
+	}
+
+</style>
+
+  <div class$="container {{class}}" id="container">
+    <div class="content fit">
+    	<content select='.content' ></content>
+    </div>
+  </div>
+
+</template>
+
+<script>
+	Polymer({
+		is: 'awc-video-hero',
+		properties: {
+			type: {
+				type: String,
+				value:"html"
+			},
+			videoType: {
+				type: String
+			},
+			url: {
+				type: String
+			},
+			urlResponsive: {
+				type: String
+			},
+			loop: {
+				type: String,
+				value:"true"
+			},
+			autoplay: {
+				type: String,
+				value:"true"
+			},
+			muted: {
+				type: String,
+				value:"true"
+			},
+			height: {
+				type: String,
+				value:"auto"
+			},
+			backgroundColor: {
+				type: String
+			},
+			backgroundImage: {
+				type: String
+			}
+		},
+		_player: null,
+		created:function(){
+			
+		},
+		ready:function(){
+			var self = this;
+
+			self.customStyle['--awc-vh-image-url']="url("+(self.backgroundImage) + ")"; 
+			self.customStyle['--awc-vh-height']=self.height;
+			self.customStyle['--awc-vh-background-color']=self.backgroundColor;
+			self.updateStyles();
+
+			
+			if (self.type=="html" || self.type=="videojs" ){
+				var video = document.createElement('video');
+				video.setAttribute('type', self.videoType); 
+				video.id="video";
+				video.src=self.url;
+
+				if (self.type=="videojs"){
+					video.setAttribute('class', 'video-js videojs');
+					video.setAttribute('data-setup', '{"controls":false,"controlBar": { "muteToggle": false }}'); 
+				}else
+				video.setAttribute('class', 'video'); 
+
+				if(self.autoplay=="true")video.autoplay=true; else video.autoplay=false ;
+				if(self.muted=="true")video.muted=true; else video.muted=false ;
+				
+	 			video.addEventListener('play', function(e) {
+	 				console.log("play");
+	       			self.fire("onbeforestart");
+	   			}, false);
+
+	   			video.addEventListener('ended', function(e) {
+	   				console.log("end");
+	       			self.fire("onend");
+	       			if(self.loop=="true"){
+						if (self.type=="videojs"){
+							this.pause();
+							this.currentTime = 0.0;
+							setTimeout(function () {      
+							   video.play();
+							}, 150);
+						}
+						else
+	       					this.play();
+	       			}
+	       			
+	   			}, false);
+					
+				Polymer.dom(self.$.container).appendChild(video);
+				
+			}else if(self.type=="youtube"){
+
+				window.onYouTubePlayerAPIReady = function(){
+					console.log('youtube player!!');
+					self._player = new YT.Player('video', {
+						height: "100%",
+   						width: "100%",
+						videoId: self.url,
+						playerVars: { 'controls': 0, 'showinfo': 0, 'rel' : 0 },
+						events: {
+							'onReady': function (event) {
+								if(self.muted=="true")event.target.mute();
+								if(self.autoplay=="true")event.target.playVideo();
+							},
+							'onStateChange': function (event) {
+								switch(event.data) {
+									case 0:
+										self.fire("onend");
+										if(self.loop=="true")self.play();
+										break;
+									case 1:
+										self.fire("onbeforestart");
+										break;
+								}
+							}
+						}
+					});
+				}
+				
+				var div = document.createElement('div');
+				div.id="videocontainer";
+				Polymer.dom(self.$.container).appendChild(div);
+				var video = document.createElement('div');
+				video.id="video";
+				video.setAttribute('class', 'video youtube'); 
+				Polymer.dom(document.getElementById("videocontainer")).appendChild(video);
+			}
+			
+
+		},
+		listeners: {
+
+		},
+		play: function (e) {
+			switch(this.type) {
+			    case "html":
+			      	document.getElementById('video').play();
+			        break;
+			    case "videojs":
+					videojs("video").play();
+			        break;
+			    case "youtube":
+			       	this._player.playVideo();
+			        break;			  
+			}	
+        },
+        pause: function () {
+         	switch(this.type) {
+			    case "html":
+			      	document.getElementById('video').pause();
+			        break;
+			    case "videojs":
+					videojs("video").pause();
+			        break;
+			    case "youtube":
+			       	this._player.pauseVideo();
+			        break;			  
+			}
+        },
+        stop: function () {
+        	switch(this.type) {
+			    case "html":
+			      	document.getElementById('video').pause();
+         			document.getElementById('video').currentTime = 0;
+			        break;
+			    case "videojs":
+					videojs("video").pause();
+					videojs("video").currentTime(0);
+			        break;
+			    case "youtube":
+			       	this._player.stopVideo();
+			        break;			  
+			}
+        }
+	});
+
+</script>
+</dom-module>
+

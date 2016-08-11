@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>awc-price-table</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="awc-price-table.html">
+	<style>
+		body > div{
+			padding: 20px;
+			font-family: 'Open Sans', sans-serif;
+			color: #4D4D4D;
+		}
+		h3{
+			font-size: 1.4em;
+			padding: 0px;
+			margin: 0px;
+			font-weight: 100;
+		}
+	</style>
+	<style is="custom-style">
+		awc-price-table{
+			--awc-pt-color:rgba(185, 24, 31, 0.73);
+			--awc-pt-border:2px solid #f1f1f1;
+			--awc-pt-background-color:transparent;
+
+			--awc-pt-active-color:white;
+			--awc-pt-active-border:2px solid red;
+			--awc-pt-active-background-color:red;
+			--awc-pt-active-label-color:white;
+			--awc-pt-active-label-background-color:#b9181f;
+		}
+  	</style>
+</head>
+<body >
+	<div>
+		<h1>AWC</h1>
+		<h2>Price Table - test</h2>
+		<hr>
+
+		<awc-price-table>
+			<li class="item">
+				<div class="header">
+					<span class="title">5</span>
+					<span class="sub-title">$0.007/hour</span>
+				</div>
+				<div class="details">
+					<span>512MB / <span style="color: #777;">1 cpu</span></span>
+					<span>20GB <span style="color: #777;">SSD Disk</span></span>
+					<span>1TB <span style="color: #777;">Transfer</span></span>
+				</div>
+			</li>
+			<li class="item">
+				<div class="header">
+					<span class="title">10</span>
+					<span class="sub-title">$0.015/hour</span>
+				</div>
+				<div class="details">
+					<span>1GB / <span style="color: #777;">1 cpu</span></span>
+					<span>30GB <span style="color: #777;">SSD Disk</span></span>
+					<span>2TB <span style="color: #777;">Transfer</span></span>
+				</div>
+			</li>
+			<li class="item active">
+				<div class="header">
+					<span class="title">20</span>
+					<span class="sub-title">$0.03/hour</span>
+				</div>
+				<div class="label">MOST POPULAR PLAN</div>
+				<div class="details">
+					<span>2GB / <span style="color: #777;">2 cpu</span></span>
+					<span>40GB <span style="color: #777;">SSD Disk</span></span>
+					<span>3TB <span style="color: #777;">Transfer</span></span>
+				</div>
+			</li>
+			<li class="item">
+				<div class="header">
+					<span class="title">40</span>
+					<span class="sub-title">$0.06/hour</span>
+				</div>
+				<div class="details">
+					<span>4GB / <span style="color: #777;">2 cpu</span></span>
+					<span>60GB <span style="color: #777;">SSD Disk</span></span>
+					<span>4TB <span style="color: #777;">Transfer</span></span>
+				</div>
+			</li>
+			<li class="item">
+				<div class="header">
+					<span class="title">80</span>
+					<span class="sub-title">$0.119/hour</span>
+				</div>
+				<div class="details">
+					<span>8GB / <span style="color: #777;">4 cpu</span></span>
+					<span>80GB <span style="color: #777;">SSD Disk</span></span>
+					<span>5TB <span style="color: #777;">Transfer</span></span>
+				</div>
+			</li>
+		</awc-price-table>
+	</div>
+	
+</body>
+</html>
+
+
+
+

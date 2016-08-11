@@ -1,0 +1,114 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/paper-progress/paper-progress.html">
+
+<dom-module id="awc-page-preloading">
+    <template>
+        <style is="custom-style" >    
+
+            :host{
+                transform: translateZ(0);
+                top: 0px;
+                left: 0px;
+                right: 0px;
+                height: 4px;
+                width: 100%;
+                z-index: 9999;
+                position: fixed;
+            };
+
+            #preloader {
+                width: 100%;
+                --paper-progress-transition-duration: 0.04s;
+                --paper-progress-transition-timing-function: ease;
+                --paper-progress-transition-transition-delay: 0s;
+                --paper-progress-container-color: rbga(255,255,255,0.3);
+            }
+
+            .fadeOut{
+                -webkit-transition: opacity 3s ease-in-out;
+                -moz-transition: opacity 3s ease-in-out;
+                -ms-transition: opacity 3s ease-in-out;
+                -o-transition: opacity 3s ease-in-out;
+                transition: opacity 3s ease-in-out;
+                opacity: 0;
+            }
+
+        </style>
+
+        <paper-progress id="preloader" value="{{value}}" max="{{max}}" indeterminate></paper-progress>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'awc-page-preloading',
+            properties: {
+                max: {
+                    type: Number,
+                    value: 1000
+                },
+                value: {
+                    type: Number,
+                    value: 1
+                },
+                media:{
+                    type:Boolean,
+                    value: true
+                },
+                color:{
+                    type: String,
+                    value:'#2196f3'
+                }
+            },
+            _max: 0,
+            created:function(){
+                var self = this;
+                var loadBar = function(){
+                    var list = document.querySelectorAll('script, link, img, video, audio');
+                    self._max = 0;
+                    for (var i = 0; i < list.length; i++) {
+                        var current = list[i];
+                        var node = current.nodeName;
+                        if( node == 'VIDEO' || node == 'AUDIO' ){
+                            self._max++;
+                            current.addEventListener('loadeddata', function(){
+                                self.value++;
+                            });
+                        }else if( node == 'IMG' ){
+                            self._max++;
+                            current.onload = function(){
+                                self.value++;
+                            };
+                        }else if( node == 'SCRIPT' || node == 'LINK' ){
+                            self._max++;
+                            current.onload = function(){
+                                self.value++;
+                            };
+                        }
+                    }
+                };
+                loadBar();
+            },
+            attached: function(){
+                this.max = this._max;
+                this.value = 0;
+            },
+            ready:function(){
+                var self = this;
+
+                if (self.media) self.$.preloader.indeterminate = false;
+
+                document.querySelector("#primaryProgress").style.background = self.color;
+
+                window.onload = function(){
+                    self.$.preloader.value = self.max;
+                    self.$.preloader.classList.add("fadeOut");
+                    self.fire('load');
+                };
+            }
+        });
+
+    </script>
+</dom-module>
+

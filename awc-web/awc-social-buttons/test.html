@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<script type="text/javascript" src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+	<link rel="import" href="../materialDesign/materialDesign.html">
+	<link rel="import" href="awc-social-buttons.html">
+	<style>
+		body > div{
+			padding: 20px;
+			font-family: 'Open Sans', sans-serif;
+			color: #4D4D4D;
+		}
+		h3{
+			font-size: 1.4em;
+			padding: 0px;
+			margin: 0px;
+			font-weight: 100;
+		}
+		.container{
+			padding:50px;
+		}
+		#colored{
+			--paper-tooltip-background:white;
+			--paper-tooltip-text-color:#E91E63;
+			--paper-tooltip-opacity:1;
+		}
+	</style>	
+</head>
+<body style="margin:0;">
+	<div class='content relative'>
+		<h1>AWC</h1>
+		<h2>Social Buttons - test</h2>
+		<hr>
+		<div class="container">
+			<div style="text-align: center"><h1>Social Buttons</h1></div>
+			<div >
+				<awc-social-buttons size="50">
+					<a href="https:\\facebook.com" class="facebook" title="Follow Company on facebook"></a>
+					<a href="https:\\twitter.com" class="twitter" title="Follow Company on @twitter"></a>
+					<a href="https:\\instagram.com" class="instagram" title="Follow Company on  @instagram"></a>
+					<a href="https:\\skype.com" class="skype" title="Follow Company on skype"></a>
+					<a href="https:\\youtube.com" class="youtube" title="Follow Company on youtube"></a>
+				</awc-social-buttons>
+			</div>
+			<br>
+			<div >
+				<awc-social-buttons style="height:100px; " color="black" type="icon">
+					<a href="https:\\facebook.com" class="facebook" title="Follow Company on facebook">/Facebook</a>
+					<a href="https:\\twitter.com" class="twitter" title="Follow Company on @twitter">@twitter</a>
+					<a href="https:\\instagram.com" class="instagram" title="Follow Company on  @instagram">Instagram</a>
+					<a href="https:\\skype.com" class="skype" title="Follow Company on skype">Skype</a>
+					<a href="https:\\youtube.com" class="youtube" title="Follow Company on youtube">Youtube</a>
+				</awc-social-buttons>
+			</div>	
+			<br>	
+			<div >
+				<awc-social-buttons style="height:100px; " color="black" type="fab" >
+					<a href="https:\\facebook.com" class="facebook" title="Follow Company on facebook"></a>
+					<a href="https:\\twitter.com" class="twitter" title="Follow Company on @twitter"></a>
+					<a href="https:\\instagram.com" class="instagram" title="Follow Company on  @instagram"></a>
+					<a href="https:\\skype.com" class="skype" title="Follow Company on skype"></a>
+					<a href="https:\\youtube.com" class="youtube" title="Follow Company on youtube"></a>
+				</awc-social-buttons>
+			</div>	
+			<br>	
+			<div >
+				<awc-social-buttons vertical color="black">
+					<a href="https:\\facebook.com" class="facebook" ></a>
+					<a href="https:\\twitter.com" class="twitter"></a>
+					<a href="https:\\instagram.com" class="instagram" ></a>
+					<a href="https:\\skype.com" class="skype" ></a>
+					<a href="https:\\youtube.com" class="youtube" ></a>
+				</awc-social-buttons>
+			</div>
+			<br>		
+			<div >
+				<awc-social-buttons vertical color="black" >
+					<a href="https:\\facebook.com" class="facebook" >/Facebook</a>
+					<a href="https:\\twitter.com" class="twitter" >@twitter</a>
+					<a href="https:\\instagram.com" class="instagram" >Instagram</a>
+					<a href="https:\\skype.com" class="skype" >Skype</a>
+					<a href="https:\\youtube.com" class="youtube" >Youtube</a>
+				</awc-social-buttons>
+			</div>
+
+			<br>	
+			<div style="background-color: #E91E63; padding:50px; ">
+				<awc-social-buttons color="white" id="colored" >
+					<a href="https:\\facebook.com" class="facebook" title="Follow Company on facebook">/Facebook</a>
+					<a href="https:\\twitter.com" class="twitter" title="Follow Company on @twitter">@twitter</a>
+					<a href="https:\\instagram.com" class="instagram" title="Follow Company on  @instagram">Instagram</a>
+					<a href="https:\\skype.com" class="skype" title="Follow Company on skype">Skype</a>
+					<a href="https:\\youtube.com" class="youtube" title="Follow Company on youtube">Youtube</a>
+				</awc-social-buttons>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

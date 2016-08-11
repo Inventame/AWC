@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>awc-continue-down-button</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="awc-continue-down-button.html">
+	<style>
+		body > div{
+			padding: 20px;
+			font-family: 'Open Sans', sans-serif;
+			color: #4D4D4D;
+		}
+		h3{
+			font-size: 1.4em;
+			padding: 0px;
+			margin: 0px;
+			font-weight: 100;
+		}
+		.container{
+			height: 600px;
+		}
+		.container > h1{
+			color: #ffffff;
+		}
+		.main{
+			height: 100px;
+			position: relative;
+		}
+	</style>
+	<style is="custom-style">
+		#one{
+
+		}
+		#two{
+			--awc-cdb-bottom:100px;
+		}
+		#three{
+			--awc-cdb-bottom:200px;
+		}
+		.section {
+	    width: 100%;
+	    height: 1000px;
+	    background-color: #cccccc;
+		}
+		
+	</style>	
+</head>
+<body>
+	<div>
+		<h1>AWC</h1>
+		<h2>Continue Down Button - test</h2>
+		<hr>
+		<div class='main'>
+			<awc-continue-down-button target="one" icon-size="50" tooltip="Down" icon-color='#26384A'></awc-continue-down-button>
+		</div>
+		<div class='main'>
+			<awc-continue-down-button target="two" ripple-effect  icon-size="70"  icon-color="#829494"></awc-continue-down-button>
+		</div>
+		<div class='main'>
+			<awc-continue-down-button target="three" fab icon-size="70" background-color="#ee4242"></awc-continue-down-button>
+		</div>
+		<div class="container" style='background:#DE332E' id='one'>
+			<h1>One</h1>
+		</div>
+		<div class="container" style='background:#EDBA0F' id='two'>
+			<h1>Two</h1>
+		</div>
+		<div class="container" style='background:#2BC45C' id='three'>
+			<h1>Three</h1>
+		</div>
+	</div>
+	<!--<h3 style="text-align: center; padding: 50px">Continue Down Button</h3>	
+
+	<div class="section" >
+	<h3>First</h3>
+		
+		<awc-continue-down-button id="one" target="second" icon-size="50" tooltip="Down" ></awc-continue-down-button>
+		<awc-continue-down-button id="two" target="third" ripple-effect  icon-size="70"  icon-color="#3b5999" ></awc-continue-down-button>
+		<awc-continue-down-button id="three" target="fourth" fab icon-size="70" background-color="#ee4242" ></awc-continue-down-button>
+	</div>
+	<div class="section" id="second">
+		<h3>Second</h3>
+	</div>
+	<div class="section" id="third">
+		<h3>third</h3>
+	</div>
+	<div class="section" id="fourth">
+		<h3>fourth</h3>
+	</div>
+
+	<script>
+		var down = document.getElementById('one');
+		down.addEventListener('onscrolltopend', function(){
+			console.log('Into de Target');
+		}); 
+	</script>-->
+</body >
+</html>
+
+
+
+

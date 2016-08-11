@@ -1,0 +1,156 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id="awc-back-to-top">
+	<template>
+		<style is="custom-style">
+			:host{
+				--awc-btt-backgroundColor:#2196f3;
+				--awc-btt-margin: 10px;
+				--awc-btt-bottom: 10px;
+				--awc-btt-iconColor: #ffffff;
+			}
+			:host paper-button{
+				position: fixed;
+				min-width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				@apply(--shadow-elevation-3dp);
+			}
+			iron-icon{
+				fill:white;
+				position: absolute;
+				top:0;
+				left:0;
+				right:0;
+				bottom:0;
+				margin: auto;
+			}
+			#up {
+				bottom: var(--awc-btt-bottom);
+				margin: var(--awc-btt-margin);
+				background-color: var(--awc-btt-backgroundColor);
+			}
+			#up > iron-icon {
+				fill:var(--awc-btt-iconColor);
+			}
+			.right{
+				right:15px;
+			}
+			.left{
+				left:15px;
+			}
+			.center{
+				left: 50%;
+				-webkit-transform: translateX(-50%);
+				-moz-transform: translateX(-50%);
+				-ms-transform: translateX(-50%);
+				-o-transform: translateX(-50%);
+				transform: translateX(-50%);
+			}
+			@keyframes fadeIn {
+				from { opacity: 0; }
+				to { opacity: 1; }
+			}
+			@keyframes fadeOut {
+				from { opacity: 1; }
+				to { opacity: 0; }
+			}
+			.show{
+				-webkit-animation:fadeIn 0.2s forwards linear;
+				-moz-animation:fadeIn 0.2s forwards linear;
+				-ms-animation:fadeIn 0.2s forwards linear;
+				-o-animation:fadeIn 0.2s forwards linear;
+				animation:fadeIn 0.2s forwards linear;
+			}
+			.hide{
+				-webkit-animation:fadeOut 0.2s forwards linear;
+				-moz-animation:fadeOut 0.2s forwards linear;
+				-ms-animation:fadeOut 0.2s forwards linear;
+				-o-animation:fadeIn 0.2s forwards linear;
+				animation:fadeOut 0.2s forwards linear;
+			}
+		</style>
+
+		<paper-button raised id="up">
+			<iron-icon icon='{{icon}}'></iron-icon>
+		</paper-button>
+	</template>
+	
+	<script>
+		Polymer({
+			is: 'awc-back-to-top',
+			properties: {
+				speed: {
+					type: Number,
+					value:400
+				},
+				icon: {
+					type: String,
+					value:"expand-less"
+				},
+				rippleEffect: {
+					type: String,
+					value:"true"
+				},
+				align: {
+					type: String,
+					value:"right"
+				}
+			 },
+			ready:function(){  
+				var self = this;
+				this.$.up.noink = ( this.rippleEffect == "false" ) ? true : false;
+				this.$.up.classList.add( this.align );
+			
+				window.addEventListener("scroll", function( event ){
+					self._showHide();
+				}, false);
+				this._showHide();
+				
+			},
+			listeners: {
+				'click':'_scrollToTop'
+			},
+			_scrollToTop:function( event ){
+			    var y = 0;
+			    var self = this;
+			    scrollDuration = this.speed;
+			    var currentScrollY = window.scrollY,
+			        dirY = y > currentScrollY ? 1 : -1,
+			        tick = 16.6667,
+			        scrollStep = Math.PI / ( scrollDuration / tick ),
+			        cosParameterY = currentScrollY / 2,
+			        scrollCount = 0,
+			        scrollMargin;
+
+			    var goToTop = function(){
+			        scrollCount = scrollCount + 1;  
+
+			        if ( window.scrollY !== y ) {
+			            scrollMargin = cosParameterY + dirY * cosParameterY * Math.cos( scrollCount * scrollStep );
+			            window.scrollTo( 0, ( currentScrollY - scrollMargin ) );
+			            requestAnimationFrame(goToTop);
+			        }else{
+			        	self.fire('onScrollEnd');
+			        }
+			    }
+
+	    		requestAnimationFrame(goToTop);	
+
+			},
+			_showHide:function (event) {
+				var top = window.scrollY;
+				if(top > 0) {
+					this.$.up.classList.remove("hide");
+					this.$.up.classList.add("show");
+				}else {
+					this.$.up.classList.remove("show");
+					this.$.up.classList.add("hide");
+				}
+			}
+		});
+
+</script>
+</dom-module>

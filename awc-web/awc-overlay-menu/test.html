@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<script src='../bower_components/webcomponentsjs/webcomponents-lite.min.js'></script>
+	<link rel="import" href="awc-overlay-menu.html">
+	<style>
+		body > div{
+			padding: 20px;
+			font-family: 'Open Sans', sans-serif;
+			color: #4D4D4D;
+		}
+		h3{
+			font-size: 1.4em;
+			padding: 0px;
+			margin: 0px;
+			font-weight: 100;
+		}
+	</style>
+	<style is='custom-style'>
+		#menu{
+			--awc-om-color: #E0DCE0;
+			--awc-om-background-color: #414142;
+			--awc-om-hover-background-color: #829494;
+			--awc-om-hover-color: #414142;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h1>AWC</h1>
+		<h2>Loading Button - test</h2>
+		<hr>
+		<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" onclick='show()' style='width:150px; height: 150px'>click</button>
+	</div>
+
+	<awc-overlay-menu id='menu' title='Responsive' hero='true' logo='https://elements.polymer-project.org/images/polymer.svg'>
+		<a href="#">Item 1</a>
+		<a href="#">Item 2</a>
+		<a href="#">Item 3</a>
+	</awc-overlay-menu>
+
+	<script>
+		function show(){
+			var menu = document.querySelector('#menu');
+			try{
+				menu.show();
+			}catch(e){
+				alert( e.message );
+			}
+		}
+
+		setTimeout( function(){
+			var menu = document.querySelector('#menu');
+			var url = document.createElement('a');
+			url.href = '#';
+			url.textContent = 'Epale';
+			menu.append( url );
+		}, 3000);
+	</script>
+
+</body>
+</html>

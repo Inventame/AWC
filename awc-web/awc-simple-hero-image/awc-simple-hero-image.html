@@ -1,0 +1,118 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<dom-module id="awc-simple-hero-image">
+<template>
+  <style is="custom-style" >
+    .container {
+      width: 100%;
+      height: var(--awc-shi-height);
+      overflow: hidden;
+      position: relative;
+      background: var(--awc-shi-url);
+      background-size: cover !important;
+      background-color:var(--awc-shi-backgroundColor) !important;
+    }
+    .fit {
+      @apply(--layout-fit);
+    }
+    .top{
+      background-position: top;
+    }
+    .bottom{
+      background-position: bottom;
+    }
+
+  </style>
+
+
+  <div class$="container {{class}}" id="container">
+    <content select='.content' ></content>
+  </div>
+</template>
+
+<script>
+    Polymer({
+        is: 'awc-simple-hero-image',
+        properties: {
+          type: {
+               type: String,
+               value:""
+           },
+           url: {
+                type: String
+            },
+            height: {
+                type: String,
+                value:"auto"
+            },
+           backgroundColor: {
+                type: String
+            },
+           urlMobile: {
+                type: String
+            },
+           urlTablet: {
+                type: String
+            },
+           urlResponsive: {
+                type: String
+            }
+        },
+        ready:function(){
+          var self = this;
+
+          self.customStyle['--awc-shi-height']=self.height;
+          self.customStyle['--awc-shi-backgroundColor']=self.backgroundColor;
+          self.updateStyles();
+
+          var mobile = window.matchMedia("(max-width:480px)");
+          var mobileHandler = function(){
+            if(this.matches){
+              self.$.container.style.background = "url("+(self.urlMobile || self.url) + ") no-repeat center center";
+            }
+          };
+          mobile.addListener(mobileHandler);
+
+          var tablet = window.matchMedia("(min-width:481px) and (max-width:600px)");
+          var tabletHandler = function(){
+            if(this.matches){
+              self.$.container.style.background = "url("+(self.urlTablet || self.url) + ") no-repeat center center";
+            }
+          };
+          tablet.addListener(tabletHandler);
+
+          var responsive = window.matchMedia("(max-width:600px)");
+          var responsiveHandler = function(){
+            if(this.matches){
+              self.$.container.style.background = "url("+(self.urlResponsive || self.url) + ") no-repeat center center";
+            }
+          };
+          responsive.addListener(responsiveHandler);
+
+          var desktop = window.matchMedia("(min-width:601px)");
+          var desktopHandler = function(){
+            if(this.matches){
+              self.$.container.style.background = "url("+ self.url + ") no-repeat center center";
+            }
+          };
+          desktop.addListener(desktopHandler);
+
+        
+          if(mobile.matches)
+            mobileHandler.apply(mobile);
+          if(tablet.matches)
+            tabletHandler.apply(tablet);
+          if(responsive.matches)
+            responsiveHandler.apply(responsive);
+          if(desktop.matches)
+            desktopHandler.apply(desktop);
+
+        },
+        listeners: {
+
+        }
+    });
+</script>
+</dom-module>
+

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>AWC - Loading Button</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="awc-loading-button.html">
+	<style>
+		body > div{
+			padding: 20px;
+			font-family: 'Open Sans', sans-serif;
+			color: #4D4D4D;
+		}
+		h3{
+			font-size: 1.4em;
+			padding: 0px;
+			margin: 0px;
+			font-weight: 100;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h1>AWC</h1>
+		<h2>Loading Button - test</h2>
+		<hr>
+		<awc-loading-button button-text="Autoloading" size="lg" loading-text="Loading..." autoloading="true" ripple-effect="true"></awc-loading-button>
+		<awc-loading-button button-text="Success" size="md" loading-text="Loading..." autoloading="true" ripple-effect="true" id='success'></awc-loading-button>
+		<awc-loading-button button-text="Error" size="md" loading-text="Loading..." autoloading="true" id='error'></awc-loading-button>
+	</div>
+	<script>
+		document.getElementById('success').addEventListener('click', success);
+		document.getElementById('error').addEventListener('click', error);
+		function success( _event ){ setTimeout( function(){ document.getElementById('success').success(); }, 2000 );}
+		function error( _event ){ setTimeout( function(){ document.getElementById('error').error(); }, 2000 );}
+	</script>
+</body>
+</html>

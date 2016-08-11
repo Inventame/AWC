@@ -1,0 +1,350 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../awc-overlay-menu/awc-overlay-menu.html">
+<link rel="import" href="../awc-responsive-tag/awc-responsive-tag.html">
+<link rel="import" href="../awc-scroll-spy/awc-scroll-spy.html">
+
+<dom-module id="awc-top-menu">
+	<template>
+  		<style is="custom-style">
+  			:host{
+  				--awc-tm-background: none; 
+  				--awc-tm-color: #000000;
+				--awc-tm-bar: #2196f3;
+				--awc-tm-background-scroll: #2196f3;
+				--awc-tm-color-scroll: #ffffff;
+				--awc-tm-bar-scroll: #ffffff;
+				--awc-om-color: var(--awc-tm-color);
+				--awc-tm-menu-size: var(--layout-flex-3);
+				--awc-tm-logo-width-scroll:50px;
+				--awc-tm-logo-height-scroll:50px;
+  			}
+  			paper-tabs{
+  				--paper-tabs-selection-bar-color:var(--awc-tm-bar);
+  			}
+  			paper-tab[link] a {  
+			    @apply(--layout-horizontal);
+			    @apply(--layout-center-center);
+			    color: var(--awc-tm-color);
+			    text-decoration: none;
+			    
+			}
+			iron-image {
+			    -webkit-transition: all 0.6s;
+			    -moz-transition: all 0.6s;
+			    -ms-transition: all 0.6s;
+			    -o-transition: all 0.6s;
+			    transition: all 0.6s;
+			}
+			.container{
+			 	height: 75px;
+				background-color:var(--awc-tm-background); 
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				right: 0px;
+				 z-index: 999;
+			    -webkit-transition: height 0.6s;
+			    -moz-transition: height 0.6s;
+			    -ms-transition: height 0.6s;
+			    -o-transition: height 0.6s;
+			    transition: height 0.6s;
+			}
+			::content.title{
+				@apply(--layout-flex-2);
+				font-family: 'Roboto', 'Noto', sans-serif;
+   				-webkit-font-smoothing: antialiased;
+			}
+			.self-end {
+				@apply(--layout-self-end);
+			}
+			.flex-horizontal {
+			    @apply(--layout-horizontal);
+			}
+			.flex-vertical {
+			    @apply(--layout-vertical);
+			}
+			.menu{
+				@apply(--layout-flex);
+				@apply(--awc-tm-menu-size);
+				margin-right: 20px;
+			}
+			.logo iron-image {
+				display: inline-block;
+			    width:var(--awc-tm-logo-width);
+			    height: var(--awc-tm-logo-height);
+			    line-height: var(--awc-tm-logo-height);
+			}
+			paper-tabs paper-tab{
+				margin-right: 15px;
+				margin-left: 15px;
+			}
+			.logo {
+				@apply(--layout-flex-1);
+				margin-left: 10px;
+			}
+			.title {
+				@apply(--layout-flex-3);
+				text-align: left;
+				line-height: var(--awc-tm-logo-height);
+				display: inline-block;
+				margin-left: 10px;
+			}
+			.truncate {
+			  width: 100px;
+			  white-space: nowrap;
+			  overflow: hidden;
+			  text-overflow: ellipsis;
+			}
+			.menu-responsive{
+				@apply(--layout-flex);
+			}
+			.menu-icon-responsive{
+				@apply(--layout-flex);
+			}
+			.logo-responsive {
+				@apply(--layout-flex-6);
+				text-align: left;
+				margin-left: 10px;
+				display: inline-block;
+			}
+			.logo-responsive iron-image{
+				width:var(--awc-tm-logo-width-responsive);
+			    height: var(--awc-tm-logo-height-responsive);
+			    line-height: var(--awc-tm-logo-height-responsive);
+			}
+			.title-responsive {
+				@apply(--layout-flex-1);
+				text-align: left;
+				line-height: var(--awc-tm-logo-height-responsive);
+				display: inline-block;
+			}
+			.menu-responsive paper-tabs {
+				 color:var(--awc-tm-color);
+			}
+			.scroll {
+			    height: 50px;
+				background-color:var(--awc-tm-background-scroll) ; 
+			    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+			}
+			.scroll div paper-tabs paper-tab[link] a {
+				color: var(--awc-tm-color-scroll);	
+			}
+			.scroll iron-image{
+			    width: var(--awc-tm-logo-width-scroll);	
+			    height: var(--awc-tm-logo-height-scroll);	   
+			}
+			.scroll .title{
+			    line-height: 50px;
+			    color: var(--awc-tm-color-scroll);	
+			}
+			#mobile.scroll {
+			    height: 70px;
+				background-color:var(--awc-tm-background-scroll) ; 
+			    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+			}
+			#mobile.scroll .menu-responsive paper-tabs {
+			    color: var(--awc-tm-color-scroll);	
+			}
+			#mobile.scroll .menu-responsive paper-icon-button {
+			    color: var(--awc-tm-color-scroll);	
+			}
+			#mobile.scroll .menu-icon-responsive paper-icon-button {
+			    color: var(--awc-tm-color-scroll);	
+			}
+			#mobile .menu-icon-responsive paper-icon-button {
+			    top:5px;
+			}
+			#mobile.scroll paper-tabs {
+			    height: 22px;
+			}
+			#mobile.scroll iron-image{
+			    width: var(--awc-tm-logo-width-scroll);	
+			    height: var(--awc-tm-logo-height-scroll);	  
+			}
+  		</style>
+  		
+		<awc-responsive-tag>
+
+			<div class="default container flex-horizontal" id="default">
+				<div class="logo">
+					<iron-image  src="{{logo}}" sizing="contain" ></iron-image>
+				</div>
+				<div class="title truncate" id="title">
+					<content select='.title' ></content>
+				</div>
+				
+				<div class="menu bottom self-end" >
+					<paper-tabs selected="0" noink id='tabs'>
+						<template is='dom-repeat' items="{{items}}">
+							<paper-tab link >
+					        	<a href="{{item.url}}" tabindex="-1" class='awc-top-menu-items' name='{{item.target}}'>{{item.title}}</a>
+					        </paper-tab>
+				    	</template>
+			        </paper-tabs>	
+				</div>
+
+
+			</div>
+
+			
+			<template is="dom-if" if="{{!collapse}}">
+			 <div class="mobile flex-vertical container " id="mobile" >
+				
+				<div class="logo-responsive">
+					<iron-image  src="{{logoResponsive}}"  sizing="contain"></iron-image>
+				</div>
+
+				<div class="menu-responsive" id="mobile-menu">
+					<paper-tabs selected="0" noink  scrollable  id='tabs'>
+						<template is='dom-repeat' items="{{items}}">
+							<paper-tab link >
+					        	<a href="{{item.url}}" tabindex="-1" class='awc-top-menu-items' name='{{item.target}}'>{{item.title}}</a>
+					        </paper-tab>
+			    		</template>
+			        </paper-tabs>	
+				</div>
+			</div>
+	        </template>
+
+	        <template is="dom-if" if="{{collapse}}">
+	        <div class="mobile  container " id="mobile" style="height: 50px" >
+          		<div class="flex-horizontal" >
+					<div class="logo-responsive">
+						<iron-image  src="{{logoResponsive}}"  sizing="contain"></iron-image>
+					</div>
+					<div class="menu-icon-responsive" id="mobile-menu-icon">
+						<paper-icon-button icon="menu" on-tap="show"></paper-icon-button>
+					</div>
+				</div>
+				<awc-overlay-menu id='sidebar' title='{{title}}' hero='{{responsiveHero}}' logo='{{logoResponsiveMenu}}'>
+					<template is='dom-repeat' items="{{items}}" >
+			      		<a href="{{item.url}}">{{item.title}}</a>
+			    	</template>
+				</awc-overlay-menu>
+			</div>
+			
+	        </template>
+	        
+		</awc-responsive-tag>
+
+		<awc-scroll-spy spy='{{spy}}' id='spy'></awc-scroll-spy>
+
+
+	</template>
+	<script>
+		Polymer({
+			is: 'awc-top-menu',
+			 properties: {
+	            logo: {
+	                type: String,
+	                notify:true
+	            },
+	            logoResponsive: {
+	                type: String,
+	                value:""
+	            },
+	            logoResponsiveMenu: String,
+	            logoSize: {
+	                type: Number,
+	                value:100
+	            },
+	            logoSizeResponsive: {
+	                type: Number,
+	                value:75
+	            },
+	            collapse: {
+			      	type: Boolean,
+			      	value:true
+			    },
+	            menu:{
+	            	type: Object
+	            },
+	            items: {
+					type: Array,
+					value: []
+				},
+				responsiveHero: {
+					type: Boolean,
+					value: false
+				},
+				spy: String
+	        },
+	        _items: [],
+	        created: function(){
+
+				var list = this.root.querySelectorAll('a');
+
+				for (var i = 0; i < list.length; i++) {
+
+					var current = list[i];
+					var item = {};
+					item.title = current.textContent || 'untitled';
+					item.url = current.getAttribute('href') || '#';
+					item.target = current.getAttribute('target') || '';
+					this._items.push( item );
+				};
+
+			},
+			ready:function(){ 
+				this.items = this._items;
+
+				if( this.logoResponsive === "" ) this.logoResponsive = this.logo;
+
+
+				this.customStyle['--awc-tm-logo-width'] = this.logoSize + "px";
+				this.customStyle['--awc-tm-logo-height'] = this.logoSize + "px";
+				this.customStyle['--awc-tm-logo-width-responsive'] = this.logoSizeResponsive + "px";
+				this.customStyle['--awc-tm-logo-height-responsive'] = this.logoSizeResponsive + "px";
+            	this.updateStyles();
+
+            	var self = this;
+	            window.addEventListener("scroll", function(event) {
+	            	self._scrollMenu();
+	         	}, false);
+	         	setTimeout( function(){ self._scrollMenu() }, 1 );
+
+	         	var spy = this.$.spy;
+				spy.addEventListener('itemActiveChanged', function( _event ){
+					var items = document.querySelectorAll('.awc-top-menu-items');
+					var id = _event.detail.item.id;
+					for (var i = 0; i < items.length; i++) {
+						var current = items[i];
+						if( current.getAttribute('name') === id ){
+							document.getElementById('tabs').selected = i;
+							self.fire('itemActiveChanged', { item: _event.detail.item });
+						}
+					};
+				});
+        	},
+        	_scrollMenu:function (event) {    
+
+		        var distanceY = window.pageYOffset || document.documentElement.scrollTop,
+		        shrinkOn = 100,
+		        menu =  this.$$('#default'),
+		        responsive =  this.$$('#mobile');
+	        	if (distanceY > shrinkOn) {
+	            	menu.classList.add("scroll");
+	            	responsive.classList.add("scroll");
+		       	} else {
+		       		menu.classList.remove("scroll");
+		       		responsive.classList.remove("scroll");
+		       	}
+    		},
+    		show:function (){
+
+				var sidebar = document.querySelector('#sidebar');
+				sidebar.title=document.querySelector('#title span').innerHTML ;
+				try{
+					sidebar.show();
+				}catch(e){
+					alert( e.message );
+				}
+			}
+		});
+	</script>
+</dom-module>

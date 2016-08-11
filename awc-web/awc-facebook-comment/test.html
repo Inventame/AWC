@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>awc-facebook-comment</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	    <meta name="mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+		<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+		<link rel="import" href="awc-facebook-comment.html">
+		<link rel="import" href="../awc-content-wrapper/awc-content-wrapper.html">
+		<style>
+			body > div{
+				padding: 20px;
+			}
+			*{
+				font-family: 'Open Sans', sans-serif;
+				color: #4D4D4D;
+			}
+			h3{
+				font-size: 1.4em;
+				padding: 0px;
+				margin: 0px;
+				font-weight: 100;
+			}
+		</style>
+		<style is="custom-style">
+			awc-content-wrapper{
+				--awc-cw-more-gradient:242,242,242;
+			}
+	  	</style>
+	</head>
+	<body>
+		<div>
+			<h1>AWC</h1>
+			<h2>Facebook Timeline - test</h2>
+			<hr>
+			<awc-facebook-comment header="Write Us" url="https://developers.facebook.com/docs/plugins/comments#configurator" numposts="5"  language="en_US"></awc-facebook-comment>
+		</div>
+
+
+	</body>
+</html>
+
+
+
+

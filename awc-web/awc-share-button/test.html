@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>awc-share-button</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+	<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="../materialDesign/materialDesign.html">
+	<link rel="import" href="awc-share-button.html">
+	<style>
+		body > div{
+			padding: 20px;
+			font-family: 'Open Sans', sans-serif;
+			color: #4D4D4D;
+		}
+		h3{
+			font-size: 1.4em;
+			padding: 0px;
+			margin: 0px;
+			font-weight: 100;
+		}
+	</style>
+	<style is="custom-style">
+		.one{
+			--awc-sb-icon-color:#E91E63;
+		}
+		.two{
+			--awc-sb-icon-color:black;
+		}
+		.three{
+			--awc-sb-icon-color:#673AB7;
+		}
+
+  	</style>
+</head>
+<body>
+	<div>
+		<h1>AWC</h1>
+		<h2>Share Button - test</h2>
+		<p>Just click a button</p>
+		<hr>
+		<awc-share-button url="https://g.co/kgs/i2hx06" text="Article Number One" from="www.inventame.com" class='one'></awc-share-button>
+		<awc-share-button url="https://g.co/kgs/i2hx06" text="Article Number Two" from="www.inventame.com" display-text class='two'></awc-share-button>
+		<awc-share-button url="https://g.co/kgs/i2hx06" text="Article Number Three" from="www.inventame.com" type="fab" class='three'></awc-share-button>
+	</div>
+		
+
+</body>
+</html>
+
+
+
+

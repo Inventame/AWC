@@ -1,0 +1,342 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../materialDesign/materialDesign.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="dialog-polyfill.js"></script>
+<link rel="stylesheet" type="text/css" href="dialog-polyfill.css" />
+
+<link rel="stylesheet" href="style.css"></head>
+
+<dom-module id="awc-share-button">
+	<template>
+		<style is="custom-style">
+			:host{
+				--awc-sb-text-color: #6B787A;
+				--awc-sb-icon-color: #6B787A;
+				--awc-sb-icon-background: #CFD8DC;
+			}
+			.button{
+			    color:var(--awc-sb-text-color);
+			}
+			.mdl-button.mdl-button--colored{
+				color:var(--awc-sb-icon-color);
+				
+			}
+			.mdl-button--fab.mdl-button--colored{
+				background:var(--awc-sb-icon-background) !important; 
+				
+			}
+			.title{
+				color: rgba(0,0,0,.87);
+			    font-size: 20px;
+			    font-weight: 600;
+			    line-height: 24px;
+			    padding-bottom: 19px;
+			}
+			.icon{
+				position: absolute;
+			    top: 50%;
+			    left: 50%;
+			    -webkit-transform: translate(-12px,-12px);
+			    transform: translate(-12px,-12px);
+			    line-height: 24px;
+			    width: 24px;
+			}
+			.close-dialog{
+				position: absolute;
+				top: 10px;
+			    right: 10px;
+			}
+			.item{
+				color: rgba(0,0,0,.87);
+			    cursor: pointer;
+			    font-size: 14px;
+			    font-weight: normal;
+			    line-height: 24px;
+			    padding: 8px 0 8px 0px;
+			}
+			.copy-text{
+			    color: rgba(0,0,0,.54);
+			    font-size: 14px;
+			    line-height: 16px;
+			    padding-top: 11px;
+			    padding-bottom: 7px;
+			}
+			.item > span{
+				font-size: 24px;    
+				display: inline-block;
+			    vertical-align: bottom;
+			    margin-right: 24px;
+			}
+			.item.mdl-button{
+				height: auto;
+				min-width: 100%;
+				text-transform: none;
+				text-align: left;
+			}
+			.item > span{
+				margin-left: 10px;
+			}
+
+			.modal {
+				max-width: 240px;
+			}
+			.mdl-dialog__content {
+    			padding: 20px 14px 20px;
+    		}
+			@-webkit-keyframes fadeInDown {
+			  from {
+			    opacity: 0;
+			    -webkit-transform: translate3d(0, -100%, 0);
+			    transform: translate3d(0, -100%, 0);
+			  }
+			  to {
+			    opacity: 1;
+			    -webkit-transform: none;
+			    transform: none;
+			  }
+			}
+			@keyframes fadeInDown {
+			  from {
+			    opacity: 0;
+			    -webkit-transform: translate3d(0, -100%, 0);
+			    transform: translate3d(0, -100%, 0);
+			  }
+			  to {
+			    opacity: 1;
+			    -webkit-transform: none;
+			    transform: none;
+			  }
+			}
+			.fadeInDown {
+			  -webkit-animation-duration: .5s;
+			  animation-duration: .5s;
+			  -webkit-animation-fill-mode: both;
+			  animation-fill-mode: both;
+			  -webkit-animation-name: fadeInDown;
+			  animation-name: fadeInDown;
+			}
+			@-webkit-keyframes fadeOutUp {
+			  from {
+			    opacity: 1;
+			  }
+			  to {
+			    opacity: 0;
+			    -webkit-transform: translate3d(0, -100%, 0);
+			    transform: translate3d(0, -100%, 0);
+			  }
+			}
+
+			@keyframes fadeOutUp {
+			  from {
+			    opacity: 1;
+			  }
+			  to {
+			    opacity: 0;
+			    -webkit-transform: translate3d(0, -100%, 0);
+			    transform: translate3d(0, -100%, 0);
+			  }
+			}
+
+			.fadeOutUp {
+			  -webkit-animation-duration: .5s;
+			  animation-duration: .5s;
+			  -webkit-animation-fill-mode: both;
+			  animation-fill-mode: both;
+			  -webkit-animation-name: fadeOutUp;
+			  animation-name: fadeOutUp;
+			}
+			.textarea{
+				position: fixed;
+			    top: 0px;
+			    left: 0px;
+			    width: 2em;
+			    height: 2em;
+			    padding: 0px;
+			    border: none;
+			    outline: none;
+			    box-shadow: none;
+			    background: transparent;
+			    visibility: hidden;
+
+			}
+		</style>
+		<div class="container" id="container">
+			<div class="button" >
+				<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" id="open">
+				  <span class="awc-sb-share icon"></span>
+				</button>
+				{{_text}}
+			</div>	
+
+			<dialog class="mdl-dialog modal fadeInDown" id="modal">
+			  <div class="mdl-dialog__content" id="content">
+			   <button class="mdl-button mdl-js-button mdl-button--icon close-dialog" id="close">
+						<i class="material-icons">close</i>
+					</button>
+					<div class="title">{{textBox}}</div>
+					<a href="{{_textFacebook}}" target="_blank">
+						<div class="item mdl-button mdl-js-button">
+							<span class="awc-sb-facebook"></span>
+							Facebook
+						</div>
+					</a>
+					<a href="{{_textTwitter}}" target="_blank">
+						<div class="item mdl-button mdl-js-button">
+							<span class="awc-sb-twitter"></span>
+							Twitter
+						</div>
+					</a>
+					<a href="{{_textEmail}}">
+						<div class="item mdl-button mdl-js-button">
+							<span class="awc-sb-email"></span>
+							Email
+						</div>
+					</a>
+					<a id="clipboard" style="display: block" onclick="document.querySelector('awc-share-button').clipboard()">
+						<div class="item mdl-button mdl-js-button" >
+								<span class="awc-sb-files-empty"></span>
+								{{_textClipboard}}
+								<textarea id="texttocopied" class="textarea" ></textarea>
+						</div>
+						
+					</a>
+					<paper-toast id='copyMessage' class='fit-bottom'  alwaysOnTop=true></paper-toast>
+			  </div>
+			</dialog>
+		</div>
+
+	</template>
+	
+	<script>
+		Polymer({
+			is: 'awc-share-button',
+			properties: {
+				url: {
+					type: String
+				},
+				text: {
+					type: String
+				},
+				from: {
+					type: String
+				},
+				type: {
+					type: String,
+					value:"default"
+				},
+				displayText: {
+					type: Boolean,
+					value: false
+				},
+				languaje: {
+					type: String,
+					value:"en"
+				},
+				textEs: {
+					type: String,
+					value:"Compartir"
+				},
+				textEn: {
+					type: String,
+					value:"Share"
+				},
+				email: {
+					type: String,
+					value:"true"
+				},
+				facebook: {
+					type: String,
+					value:"true"
+				},
+				_textFacebook: {
+					type: String
+				},
+				twitter: {
+					type: String,
+					value:"true"
+				},
+				_textTwitter: {
+					type: String
+				}
+
+			},
+			ready:function(){
+				var self = this;
+				self.$.copyMessage.fitInto = content;
+
+				
+				if(self.displayText){
+					if(self.languaje=="es")	self._text=self.textEs;
+					else self._text=self.textEn;
+				}
+				
+				if(self.languaje=="es"){
+					self.textBox=self.textEs;
+					self._textFacebook="https://www.facebook.com/sharer/sharer.php?u="+self.url;
+					self._textTwitter="https://twitter.com/intent/tweet?text="+self.text+" "+self.url+" desde "+self.from;
+					self._textEmail="mailto:?subject=Compartido desde "+self.from+" &body="+self.text+" "+self.url+" desde "+self.from;
+					self._textClipboard="Copiar al portapapeles";
+				}else{ 
+					self.textBox=self.textEn;
+					self._textFacebook="https://www.facebook.com/sharer/sharer.php?u="+self.url;
+					self._textTwitter="https://twitter.com/intent/tweet?text="+self.text+" "+self.url+" from "+self.from;
+					self._textEmail="mailto:?subject=Share from "+self.from+" &body="+self.text+" "+self.url+" from "+self.from;
+					self._textClipboard="Copy to Clipboard";
+				}	
+				self.$.texttocopied.textContent = self._textTwitter;
+
+				if(self.type=="fab"){
+					self.$.open.classList.add("mdl-button--fab");
+					self.$.open.classList.add("mdl-button--mini-fab");
+				}
+				
+
+				var dialog = document.querySelector('dialog');	
+			    if (! dialog.showModal)
+			      dialogPolyfill.registerDialog(dialog);
+			    
+				self.$.open.addEventListener("click", function(event) {	self.show(); }, false);
+				self.$.close.addEventListener("click", function(event) { self.hide(); }, false);
+				
+				
+			},
+			_expand: function( _expand ){
+				var self = this;
+				
+				if( _expand ){
+					document.querySelector('dialog').showModal();
+				}else{
+					self.$.modal.className = 'mdl-dialog modal fadeOutUp style-scope awc-share-button';
+					setTimeout(function(){ 
+						document.querySelector('dialog').close();
+						self.$.modal.className = 'mdl-dialog modal fadeInDown style-scope awc-share-button'; 
+					}, 500);
+					
+				}
+			},
+			show:function() {
+				this._expand( true );
+			},
+			hide:function( ) {
+				this._expand( false );
+			},
+			clipboard:function( ) {
+					
+					if (window.clipboardData && window.clipboardData.setData) {
+				        return clipboardData.setData("Text",  document.getElementById("texttocopied").textContent); 
+				    } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+				        document.getElementById("texttocopied").style.visibility="visible";
+				        document.getElementById("texttocopied").select();
+				        document.execCommand("copy");
+				        document.getElementById("texttocopied").style.visibility="hidden";
+				    }
+
+				if(this.languaje=="es")
+					document.getElementById('copyMessage').show({text: 'enlace copiado', duration: 1000});
+				else
+					document.getElementById('copyMessage').show({text: 'copied link', duration: 1000});
+			}
+		});
+	</script>
+</dom-module>

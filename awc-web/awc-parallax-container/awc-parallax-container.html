@@ -1,0 +1,135 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<dom-module id="awc-parallax-container">
+	<template>
+		<style is="custom-style">
+			:host{
+				position: relative;
+				@apply(--layout-vertical);
+				--awc-pc-transform: translate3d(-50%,0,0);
+			}
+			:host.fit{
+		    	@apply(--layout-fit);
+		    }
+		    .parallax{
+		    	position: absolute;
+		    	top: 0px;
+		    	left: 0px;
+		    	right: 0px;
+				bottom: 0px;
+				z-index: 1;
+				overflow: hidden;
+		    }
+		    .image{
+		    	position: absolute;
+		    	left: 50%;
+		    	top: -25%;
+		    	bottom: 0px;
+		    	min-height: 100%;
+		    	min-width: 100%;
+		    	-webkit-transform: var(--awc-pc-transform);
+		    	-moz-transform: var(--awc-pc-transform);
+		    	-ms-transform: var(--awc-pc-transform);
+		    	-o-transform: var(--awc-pc-transform);
+		    	transform: var(--awc-pc-transform);
+		    }
+		</style>
+
+		<div class='parallax'>
+			<img class='image' id='image'>
+		</div>
+		<content></content>
+
+	</template>
+	
+	<script>
+		Polymer({
+			is: 'awc-parallax-container',
+			properties: {
+				url: String,
+             	urlMobile: String,
+             	urlTablet: String,
+             	urlResponsive: String
+			},
+			ready:function(){
+				var self = this;
+
+				var mobile = window.matchMedia("(max-width:480px)");
+				var mobileHandler = function(){
+					if(this.matches){
+						self.$.image.src = self.urlMobile || self.url;
+					}
+				};
+				mobile.addListener(mobileHandler);
+
+				var tablet = window.matchMedia("(min-width:481px) and (max-width:600px)");
+				var tabletHandler = function(){
+					if(this.matches){
+						self.$.image.src = self.urlTablet || self.url;
+					}
+				};
+				tablet.addListener(tabletHandler);
+
+				var responsive = window.matchMedia("(max-width:600px)");
+				var responsiveHandler = function(){
+					if(this.matches){
+						self.$.image.src = self.urlResponsive || self.url;
+					}
+				};
+				responsive.addListener(responsiveHandler);
+
+				var desktop = window.matchMedia("(min-width:601px)");
+				var desktopHandler = function(){
+					if(this.matches){
+						self.$.image.src = self.url;
+					}
+				};
+				desktop.addListener(desktopHandler);
+
+
+				if(mobile.matches)
+					mobileHandler.apply(mobile);
+				if(tablet.matches)
+					tabletHandler.apply(tablet);
+				if(responsive.matches)
+					responsiveHandler.apply(responsive);
+				if(desktop.matches)
+					desktopHandler.apply(desktop);
+
+				var self = this;
+				window.addEventListener('scroll', function(){ self._scroll.apply( self ); });
+				this.updateStyles();
+			},
+			_lastValue: 0,
+			_scroll: function(){
+			    var elemTop = this.getBoundingClientRect().top;
+			    var elemBottom = this.getBoundingClientRect().bottom;
+			    var dy = (elemTop/4)*-1;
+
+			    var isVisible = false;
+			    if( elemTop === 0 || elemTop <= window.innerHeight )
+			    	isVisible = true;
+			    if( elemBottom > 0 )
+			    	isVisible = true;
+			    if( elemBottom < 0 )
+			    	isVisible = false;
+			    if( elemTop > window.innerHeight )
+			    	isVisible = false;
+
+				if( isVisible ){
+			    	var d = this.getAttribute('dy') || 0.25;
+			    	if( d === 0 ){
+			    		this.setAttribute('dy', dy);
+			    		displacement = 0;
+			    	}else{
+			    		displacement = ( dy - d );
+			    	}
+
+					this.customStyle['--awc-pc-transform'] = 'translate3d(-50%, '+displacement+'px, 0px);';
+					this.updateStyles();
+				}
+			}
+		});
+</script>
+</dom-module>

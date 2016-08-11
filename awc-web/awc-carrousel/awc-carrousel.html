@@ -1,0 +1,164 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animated-pages.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animatable.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animations.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/image-icons.html">
+<link rel="import" href="awc-carrousel-item.html">
+<script src='hammer.min.js'></script>
+
+<dom-module id="awc-carrousel">
+	<template>
+		<style is="custom-style">
+			.page{
+				width: 100%;
+				height: 100%;
+			}
+			:host, .fit{
+		    	@apply(--layout-fit);
+		    }
+		    #dots{
+		    	position: absolute;
+		    	left: 0px;
+		    	right: 0px;
+		    	bottom: 10px;
+		    	margin: auto;
+		    	min-width: 100px;
+		    	height: 16px;
+		    	background-color: transparent;
+		    }
+		    .dot-list{
+		    	margin: 0px;
+		    	padding: 0px;
+		    	list-style: none;
+		    }
+		    .dot-list > li{
+		    	list-style: none;
+		    	display: inline-block;
+		    }
+		    .dot-list > li.light{
+		    	color: rgba(255, 255, 255, 0.3);
+		    }
+		    .dot-list > li.light.active{
+		    	color: rgba(0, 0, 0, 0.3);
+		    }
+		    .dot-list > li.dark{
+		    	color: rgba(0, 0, 0, 0.3);
+		    }
+		    .dot-list > li.dark.active{
+		    	color: rgba(255, 255, 255, 0.3);
+		    }
+
+		</style>
+
+      	<neon-animated-pages id="pages" selected="{{selected}}" entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}" style$='{{style}}' class='fit'>
+      		<content></content>
+      	</neon-animated-pages>
+      	<div id='dots' hidden$='{{hideDots}}'>
+      		<center>
+      			<ul class='dot-list' id='dotlist'>
+	      			<template is='dom-repeat' items='{{pages}}'>
+	      				<li class$='{{theme}}' on-tap='selectPage'><iron-icon icon='image:brightness-1' style='width:8px' id='{{index}}'></iron-icon></li>
+	      			</template>
+	      		</ul>
+      		</center>
+      	</div>
+
+	</template>
+	
+	<script>
+		Polymer({
+			is: 'awc-carrousel',
+			properties: {
+				selected:{
+					type: Number,
+					value: 0,
+					notify: true,
+					reflectToAttribute: true
+				},
+				theme: {
+					type: String,
+					value: 'light'
+				},
+				hideDots:{
+					type: Boolean,
+					value: false
+				},
+				autoplay: {
+					type: Boolean,
+					value: false
+				},
+				time: {
+					type: Number,
+					value: 2000
+				},
+				entryAnimation: String,
+				exitAnimation: String,
+				pages: {
+					type: Array,
+					value: [],
+					notify: true
+				}
+			},
+			_activeDot: function( _index ){
+				var dots = this.$.dotlist.querySelectorAll('li');
+				for (var i = 0; i < dots.length; i++) {
+					var current = dots[i];
+					var clase = current.className;
+					clase = clase.replace('active', '');
+					if( i === _index )
+						current.className = clase + ' active';
+					else
+						current.className = clase;
+				};
+			},
+			next: function(){
+		        this.entryAnimation = 'slide-from-right-animation';
+		        this.exitAnimation = 'slide-left-animation';
+		        this.selected = (this.selected + 1 < this._list.length)? this.selected + 1 : 0;
+		        this._activeDot( this.selected );
+			},
+			back: function(){
+		        this.entryAnimation = 'slide-from-left-animation';
+        		this.exitAnimation = 'slide-right-animation';
+		        this.selected = (this.selected - 1 >= 0)? this.selected - 1 : this._list.length - 1;
+		        this._activeDot( this.selected );
+			},
+			selectPage: function( _event, _detail ){
+				var index = parseInt( _event.target.id );
+				if( this.selected < index ){
+					this.entryAnimation = 'slide-from-right-animation';
+			        this.exitAnimation = 'slide-left-animation';
+			    }else{
+			    	this.entryAnimation = 'slide-from-left-animation';
+        			this.exitAnimation = 'slide-right-animation';
+        		}
+			    this.selected = index;
+			    this._activeDot( index );
+			    this.fire('onSelectedPage', [index]);
+			},
+			ready:function(){
+
+				var self = this;
+				var gestures = new Hammer( this.$.pages );
+				gestures.on('swipeleft', function(){
+					self.next.apply( self );
+				});
+				gestures.on('swiperight', function(){
+					self.back.apply( self );
+				});
+
+				this._list = this.querySelectorAll('.page');
+				this.pages = [];
+				for (var i = 0; i < this._list.length; i++) {
+					this.pages.push( { content: this._list[i] } );
+				};
+				setTimeout( function(){ self._activeDot(0); }, 1 );
+				if( this.autoplay === true ){
+					setInterval( function(){ self.next(); }, this.time );
+				}
+			}
+		});
+</script>
+</dom-module>

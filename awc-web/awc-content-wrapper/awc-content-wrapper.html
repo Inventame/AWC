@@ -1,0 +1,215 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../materialDesign/materialDesign.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
+<dom-module id="awc-content-wrapper">
+	<template>
+		<style is="custom-style">
+			:host{
+				--awc-cw-more-gradient:255,255,255;
+			}
+			.container{
+				display: inline-block;
+				background-color: var(--awc-cw-background);
+			}
+			.wrapper{
+				display: inline-block;
+				width: 100%;
+				height: var(--awc-cw-height);
+				overflow: hidden;
+				position: relative;
+				top: 0;
+			    right: 0;
+			    bottom: 0;
+			    left: 0;
+			}
+			.content{
+				position: relative;
+				top: 0;
+			    right: 0;
+			    bottom: 0;
+			    left: 0;
+			}
+			.fit{
+		    	@apply(--layout-fit);
+		    }
+		    .bottom{
+		    	position: relative;
+    			margin-top: 30px;
+    			height: 50px;
+			}
+		    .end{
+		    	bottom: 0px;
+			    height: 30px;
+			    left: 0;
+			    position: absolute;
+			    width: 100%;
+			    background: -webkit-linear-gradient(top,rgba(var(--awc-cw-more-gradient),0),rgba(var(--awc-cw-more-gradient),1));
+			    background: -o-linear-gradient(top,rgba(var(--awc-cw-more-gradient),0),rgba(var(--awc-cw-more-gradient),1));
+			    background: -moz-linear-gradient(top,rgba(var(--awc-cw-more-gradient),0),rgba(var(--awc-cw-more-gradient),1));
+			    background: linear-gradient(to bottom,rgba(var(--awc-cw-more-gradient),0),rgba(var(--awc-cw-more-gradient),1));
+			}
+			iron-icon{ 
+				color:var(--awc-cdb-icon-color);
+				height: var(--awc-cdb-icon-size); 
+				width: var(--awc-cdb-icon-size); 
+			}
+		    .mdl-button{
+		    	background-color: var(--awc-cw-background-color);
+		    }
+		    .mdl-button:hover{
+		    	background-color: var(--awc-cw-background-color);
+		    }
+		    .center{
+				text-align: center;
+		    }
+		    .right{
+		    	text-align: right;
+				right:15px;
+			}
+			.left{
+				text-align: left;
+				left:15px;
+			}
+		    .flex-center-justified {
+		    	@apply(--layout-horizontal);
+		        @apply(--layout-center-justified);
+		  	}
+		  	.box{
+	  			padding: var(--awc-cw-padding);
+	  		}
+	  		.show{
+				-webkit-animation:fadeIn var(--awc-cw-fadeSpeed) forwards linear;
+				-moz-animation:fadeIn var(--awc-cw-fadeSpeed) forwards linear;
+				-ms-animation:fadeIn var(--awc-cw-fadeSpeed) forwards linear;
+				-o-animation:fadeIn var(--awc-cw-fadeSpeed) forwards linear;
+				animation:fadeIn var(--awc-cw-fadeSpeed) forwards linear;
+				overflow: visible;
+			}
+			@keyframes fadeIn {
+				from { opacity: 0; }
+				to { opacity: 1; }
+			}
+		</style>
+		<div id="box" class="box flex-center-justified">
+			<div id='container'  class="container" style$="width:{{width}}" >
+				<div class="wrapper" id='wrapper'>
+					<div class="content">
+						<content></content>
+					</div>
+					<div class="end" id="end"></div>
+				</div>
+				<div class="bottom" id="bottom">
+					<button class="mdl-button mdl-js-button" id="button" >
+						{{text}}
+						<iron-icon icon="[[icon]]"></iron-icon>
+					</button>
+				</div>
+			</div>	
+		</div>
+	</template>
+	
+	<script>
+		var display=false;
+		Polymer({
+			is: 'awc-content-wrapper',
+			properties: {
+				height: {
+					type: String,
+					value:"300px"
+				},
+				width: {
+	                type: String
+            	},
+            	padding: {
+	                type: String
+            	},
+            	background: {
+	                type: String,
+	                value:"transparent"
+            	},
+            	fadeSpeed: {
+	                type: String,
+	                value:"0.4s"
+            	},
+            	expandText: {
+	                type: String,
+	                value: "More"
+           		},
+           		collapseText: {
+	                type: String,
+	                value: "Hide"
+           		},
+           		shadow:{
+            		type: Number
+            	},
+            	buttonAling: {
+	                type: String,
+	                value:"right"
+           		},
+           		iconSize: {
+					type: String
+				},
+				iconColor: {
+					type: String,
+					value:"black"
+				},
+				expandIcon: {
+					type: String,
+					value:"expand-more"
+				},
+				collapseIcon: {
+					type: String,
+					value:"expand-less"
+				},
+				rippleEffect: {
+					type: Boolean,
+					value:false
+				}
+			},
+			ready:function(){
+				var self = this;
+				self.customStyle['--awc-cw-padding'] = self.padding;
+				self.customStyle['--awc-cw-fadeSpeed'] = self.fadeSpeed;
+				self.customStyle['--awc-cw-height'] = self.height;
+				self.customStyle['--awc-cw-background'] = this.background;
+				self.customStyle['--awc-cdb-icon-size'] = self.iconSize + "px";
+				self.customStyle['--awc-cdb-icon-color'] = self.iconColor;
+				self.updateStyles();
+
+				if(self.shadow)
+					self.$.container.classList.add("mdl-shadow--"+ self.shadow+"dp");
+
+				if(self.rippleEffect)
+						self.$.button.classList.add("mdl-js-ripple-effect");
+					
+				self.listen(this.$.button, 'tap', 'toogle');
+				self.$.bottom.classList.add(self.buttonAling);
+				self.text=self.expandText;
+				self.icon=self.expandIcon;
+			},
+			toogle:function () {
+
+				var self = this;
+				if (!display){
+					self.$.wrapper.classList.add("show");
+					self.$.end.style.display="none";
+					display=true;
+					self.text=self.collapseText;
+					self.icon=self.collapseIcon;
+					self.fire('onExpand');
+				}else{
+					 self.$.wrapper.classList.remove("show");
+					 self.$.end.style.display="";
+					 display=false;
+					 self.text=self.expandText;
+					 self.icon=self.expandIcon;
+					self.fire('onCollapse');
+				}
+
+
+			}
+		});
+</script>
+</dom-module>

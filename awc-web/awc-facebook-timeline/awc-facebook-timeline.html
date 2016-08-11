@@ -1,0 +1,58 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../materialDesign/materialDesign.html">
+
+<dom-module id="awc-facebook-timeline">
+	<template>
+		<style is="custom-style">
+		:host{
+			width: 100%;
+			height: 100%;
+		}
+
+		</style>
+			
+			<div id="fb-root"></div>
+			<div class="fb-post" data-href="{{url}}" id="comments" ></div>
+	</template>
+	
+	<script>
+		Polymer({
+			is: 'awc-facebook-timeline',
+			properties: {
+				url: {
+	                type: String
+            	},
+				width: {
+					type: String,
+					value:"300"
+				},
+				language: {
+					type: String,
+					value:"en_US"
+				}
+			},
+			ready:function(){
+				var self = this;
+
+				self.customStyle['--awc-fc-background'] = self.background;
+				self.updateStyles();
+
+				console.log("inicio");
+				window.onload = function(){ 
+					document.getElementById("comments").setAttribute('data-href', self.url);
+					document.getElementById("comments").setAttribute('data-width', self.width);
+					
+					var js, fjs = document.getElementsByTagName("script")[0];
+					if (document.getElementById("facebook-jssdk")) return;
+					js = document.createElement("script"); 
+					js.id = "facebook-jssdk";
+					js.src = "//connect.facebook.net/"+self.language+"/sdk.js#xfbml=1&version=v2.7";
+					fjs.parentNode.insertBefore(js, fjs);
+
+					
+				}
+				
+			}
+		});
+</script>
+</dom-module>

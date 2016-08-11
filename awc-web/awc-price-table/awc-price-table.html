@@ -1,0 +1,160 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../materialDesign/materialDesign.html">
+
+<dom-module id="awc-price-table">
+	<template>
+		<style is="custom-style">
+			:host{
+				--awc-pt-color:#666666;
+				--awc-pt-border: 2px solid #f1f1f1;
+				--awc-pt-background-color:transparent;
+
+				--awc-pt-active-color: #ffffff;
+				--awc-pt-active-border: 2px solid #0080ff;
+				--awc-pt-active-background-color: #0080ff;
+				--awc-pt-active-label-color: #ffffff;
+				--awc-pt-active-label-background-color: #0066cc;
+			}
+			.container{
+				@apply(--layout-center-justified);
+			}
+			li{
+				display: inline-block;
+	    		list-style: none;
+	    		margin: 0;
+    			padding: 0;
+			    border: var(--awc-pt-border);
+			    background-color: var(--awc-pt-background-color);
+			    color:var(--awc-pt-color);
+			    display: inline-block;
+			    text-align: center;
+			    margin-top: 20px;
+    			border-radius: 3px 0 0 3px;
+			}
+			.header{
+				font-size: 48px;
+				line-height: 30px;
+				padding: 23px 0 25px;
+			}
+			.sub-title{
+    			font-size: 19px;
+    			display: block;
+			}
+			.details{
+				padding: 13px 0;
+    			font-size: 18px;
+			}
+			li.active{
+				border: var(--awc-pt-active-border);
+			    margin-top: 0;
+			    border-radius: 3px;
+			    border-color: var(--awc-pt-active-border);
+			    margin-bottom: -20px;
+			}
+			.active > div.header{
+			    background-color: var(--awc-pt-active-background-color);
+			    color:var(--awc-pt-active-color);
+			    border-bottom: none;
+			}
+			.label {
+			    display: block;
+			    padding: 12px 0;
+			    background-color: var(--awc-pt-active-label-background-color);
+			    color: var(--awc-pt-active-label-color);
+			    font-size: 13px;
+			    font-weight: 600;
+			}
+			.details > span{
+				display: block;
+   				margin: 10px 0;
+			}
+			li:first-child {
+    			border-right: none;
+			}
+			li:last-child{
+				border-left: none;
+			}
+			@media (max-width: 1000px){
+				li{
+					margin: 0 10px 20px;
+				}
+				li.active{
+				    margin-bottom: 20px;
+					margin-top: 0px;
+				}
+				li:first-child {
+    				border-right:var(--awc-pt-border);
+				}
+				li:last-child{
+					border-left:var(--awc-pt-border);
+				}
+			}
+			@media (max-width: 640px){
+				li {
+					margin: 0 10px 20px;
+				}
+			}
+		</style>
+		<div class="container mdl-grid" id="container">
+				<content></content>		
+		</div>
+	</template>
+	
+	<script>
+		Polymer({
+			is: 'awc-price-table',
+			properties: {
+
+			},
+			ready:function(){
+				var self = this;
+
+				var responsive = window.matchMedia("(max-width:1000px)");
+				var responsiveHandler = function(){
+					if(this.matches){
+						var content=self.$.container.querySelectorAll('*');
+						for (var i = 0; i < content.length; i++) {
+							var current = content[i];
+							if(current.classList.contains("item")&&current.classList.contains("active")){
+								current.className =' style-scope awc-price-table mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--4-col-phone item active';
+							}else if(current.classList.contains("item")){
+								current.className =' style-scope awc-price-table mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--4-col-phone item ';
+							}else{
+								current.className += ' style-scope awc-price-table ';
+							}
+						}
+					}
+				};
+				responsive.addListener(responsiveHandler);
+
+				var desktop = window.matchMedia("(min-width:1001px)");
+				var desktopHandler = function(){
+					if(this.matches){
+						var cell=3;
+						if(self.$.container.querySelectorAll('.item').length > 4)
+							cell=2;
+
+						var content=self.$.container.querySelectorAll('*');
+						for (var i = 0; i < content.length; i++) {
+							var current = content[i];
+							if(current.classList.contains("item")&&current.classList.contains("active")){
+								current.className =' style-scope awc-price-table mdl-cell mdl-cell--'+cell+'-col mdl-cell--3-col-tablet mdl-cell--4-col-phone item active';
+							}else if(current.classList.contains("item")){
+								current.className =' style-scope awc-price-table mdl-cell mdl-cell--'+cell+'-col mdl-cell--3-col-tablet mdl-cell--4-col-phone item';
+							}else {
+								current.className += ' style-scope awc-price-table ';
+							}
+						}
+					}
+				};
+				desktop.addListener(desktopHandler);
+
+				if(desktop.matches)
+					desktopHandler.apply(desktop);
+				if(responsive.matches)
+					responsiveHandler.apply(responsive);
+			}
+		});
+	</script>
+</dom-module>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Back to Top Buttom</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="../materialDesign/materialDesign.html">
+	<link rel="import" href="../aux-styles.html">
+	<link rel="import" href="awc-carrousel.html">
+	<style>
+		body > div{
+			padding: 20px;
+		}
+		*{
+			font-family: 'Open Sans', sans-serif;
+			color: #4D4D4D;
+		}
+		h3{
+			font-size: 1.4em;
+			padding: 0px;
+			margin: 0px;
+			font-weight: 100;
+		}
+		.container{
+			height: 500px !important;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h1>AWC</h1>
+		<h2>Carrousel - test</h2>
+		<hr>
+		Simple Gallery
+		<div class="relative container">
+			<awc-carrousel theme='light' time='3000' autoplay='true' id='one'>
+				<awc-carrousel-item src='http://slodive.com/wp-content/uploads/2012/02/beach-backgrounds/coastal-background.jpg' class='page'></awc-carrousel-item>
+				<awc-carrousel-item src='http://hdwallpaperia.com/wp-content/uploads/2013/12/Beach-Background-Wallpaper-HD-640x400.jpg' class='page'></awc-carrousel-item>
+				<awc-carrousel-item src='http://files.vividscreen.info/soft/f61ece7189139a6092007c1742c8a237/Seashells-on-Sand-Beach-wide-i.jpg' class='page'></awc-carrousel-item>
+				<awc-carrousel-item src='https://pixabay.com/static/uploads/photo/2014/04/05/11/39/beach-316538_960_720.jpg' class='page'></awc-carrousel-item>
+			</awc-carrousel>
+		</div>
+		<br><br>
+		Simple Gallery With Content
+		<div class="relative container">
+			<awc-carrousel theme='light' id='two'>
+				<awc-carrousel-item src='http://slodive.com/wp-content/uploads/2012/02/beach-backgrounds/coastal-background.jpg' class='page'>
+					<div class="content flex-vertical-center">
+						<div class='flex'><h1>Hola mundo</h1></div>
+					</div>
+				</awc-carrousel-item>
+				<awc-carrousel-item src='http://hdwallpaperia.com/wp-content/uploads/2013/12/Beach-Background-Wallpaper-HD-640x400.jpg' class='page'></awc-carrousel-item>
+				<awc-carrousel-item src='http://files.vividscreen.info/soft/f61ece7189139a6092007c1742c8a237/Seashells-on-Sand-Beach-wide-i.jpg' class='page'></awc-carrousel-item>
+				<awc-carrousel-item src='https://pixabay.com/static/uploads/photo/2014/04/05/11/39/beach-316538_960_720.jpg' class='page'></awc-carrousel-item>
+			</awc-carrousel>
+		</div>
+	</div>
+</body >
+</html>
+
+
+
+
