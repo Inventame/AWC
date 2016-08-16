@@ -1,20 +1,21 @@
 {
-  "name": "awc_web_basic",
+  "name": "amazing-web-components",
   "authors": [
-    "Inventame Group"
+    "Inventame, Inc"
   ],
-  "description": "repositorio de componentes web para Inventame",
+  "description": "Repository of components to crate web pages.",
   "main": "",
   "keywords": [
+    "web-components"
     "web",
     "components",
     "inventame",
     "web",
     "basic"
   ],
-  "license": "2016 Inventame Group LLC",
+  "license": "2016 Inventame, Inc",
   "homepage": "www.inventa.me",
-  "private": true,
+  "private": false,
   "ignore": [
     "**/.*",
     "node_modules",
