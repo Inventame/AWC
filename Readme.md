@@ -53,11 +53,10 @@ You can use the "dist" folder to imports your components.
     <link rel="import" href="/path/to/your/dist/component">
     ``
     
-In order to use your components you need to install the dependencies, on the folder
-**dist/awc-web** install the bower components, runing on your cmd:
+In order to use your components you need to install the package using bower:
 
     ``
-    $ bower install
+    $ bower install amazing-web-components
     ``
 
 ---
