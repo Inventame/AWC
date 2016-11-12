@@ -28,6 +28,7 @@
 				margin: auto;
 			}
 			#up {
+				z-index: 999;
 				bottom: var(--awc-btt-bottom);
 				margin: var(--awc-btt-margin);
 				background-color: var(--awc-btt-backgroundColor);
@@ -73,7 +74,7 @@
 			}
 		</style>
 
-		<paper-button raised id="up">
+		<paper-button raised id="up" class='hide'>
 			<iron-icon icon='{{icon}}'></iron-icon>
 		</paper-button>
 	</template>
@@ -142,10 +143,11 @@
 			},
 			_showHide:function (event) {
 				var top = window.scrollY;
-				if(top > 0) {
+				var classes = this.$.up.classList;
+				if( top > 0 && classes.contains("hide")){
 					this.$.up.classList.remove("hide");
 					this.$.up.classList.add("show");
-				}else {
+				}else if( !classes.contains("hide") && top === 0 ){
 					this.$.up.classList.remove("show");
 					this.$.up.classList.add("hide");
 				}

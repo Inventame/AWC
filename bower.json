@@ -4,9 +4,8 @@
     "Inventame, Inc"
   ],
   "description": "Repository of components to crate web pages.",
-  "main": "",
   "keywords": [
-    "web-components"
+    "web-components",
     "web",
     "components",
     "inventame",
@@ -15,7 +14,7 @@
   ],
   "license": "2016 Inventame, Inc",
   "homepage": "www.inventa.me",
-  "private": false,
+  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
